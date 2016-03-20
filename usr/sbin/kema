@@ -24,6 +24,7 @@
 # Kema variables
 : ${KEMA_CONFIG_FILE:=/etc/kema/kema.conf}
 : ${KEMA_CORE_DIR:=/usr/libexec/kema}
+: ${KEMA_BOOTLOADER_DIR:=${KEMA_CORE_DIR}/bootloader}
 : ${KEMA_VAR_DIR:=/var/lib/kema}
 : ${KEMA_SAVED_CONFIG:=${KEMA_VAR_DIR}/saved.config}
 : ${KEMA_ARCH:=${HOSTTYPE}}
@@ -79,9 +80,9 @@ function isTestPending
 
 # Load bootloader functions
 if [[ -z "${BOOTLOADER}" ]]; then
-  . "${KEMA_CORE_DIR}/default"
-elif [[ -r "${KEMA_CORE_DIR}/bootloader/${BOOTLOADER}" ]]; then
-  . "${KEMA_CORE_DIR}/bootloader/${BOOTLOADER}"
+  . "${KEMA_BOOTLOADER_DIR}/default"
+elif [[ -r "${KEMA_BOOTLOADER_DIR}/${BOOTLOADER}" ]]; then
+  . "${KEMA_BOOTLOADER_DIR}/${BOOTLOADER}"
 else
   efatal $(gettext "Could not find \${BOOTLOADER} bootloader file")
 fi
