@@ -23,7 +23,7 @@ KEMA_DESCRIPTION=$(gettext "Give help on kema")
 
 echo -e $(gettext "kema, the Gentoo kernel manager")
 echo
-echo -e $(gettext "kema have the following services:")
+echo -e $(gettext "kema has the following services:")
 for kema_cmd in ${KEMA_CORE_DIR}/kema-*; do
   extracted=$(echo "${kema_cmd}" | perl -pe 's/^.*kema-//')
   echo -ne "  \e[0;92m${extracted}\e[0m "

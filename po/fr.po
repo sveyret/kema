@@ -103,7 +103,7 @@ msgid "kema, the Gentoo kernel manager"
 msgstr "kema, le gestionnaire de noyau pour Gentoo"
 
 #: libexec/kema-help:26
-msgid "kema have the following services:"
+msgid "kema has the following services:"
 msgstr "kema a les services suivants :"
 
 #: libexec/kema-help:37
