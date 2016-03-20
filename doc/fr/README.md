@@ -23,12 +23,12 @@ Vous devez avoir reçu une copie de la GNU General Public License en même temps
 
 # Install
 
-Un Makefile est fourni pour compiler les messages. L'installation se fait simplement en copiant les fichiers aux emplacement appropriés.
+Un Makefile est fourni pour compiler les messages. L'installation se fait simplement en copiant les fichiers aux emplacements appropriés.
 
     DEST=/
     LINGUAS=fr
     make
-    cp -R sbin usr etc $DEST
+    cp -R sbin usr etc ${DEST}
     cp po/${LINGUAS}.mo /usr/share/locale/${LINGUAS}/LC_MESSAGES/kema.mo
 
 # Mode d'emploi
