@@ -1,4 +1,4 @@
-# kema, Gentoo kernel manager
+# kema, the Gentoo kernel manager
 
 kema is a set of shell scripts used to ease management of a Linux kernel under Gentoo. Its main purposes are:
 * Quickly upgrade kernel when a new version is delivered.
