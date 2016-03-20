@@ -38,7 +38,7 @@ fi
 
 # Information
 einfo $(gettext "Validating configuration modifications done on: \${TEST_KERNEL}")
-echo -e "  "
+echo -ne "  "
 einfo $(gettext "\(replacing: \${CUR_KERNEL}\)")
 pause
 

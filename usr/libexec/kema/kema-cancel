@@ -38,7 +38,7 @@ fi
 
 # Information
 einfo $(gettext "Canceling configuration modifications done on: \${TEST_KERNEL}")
-echo -e "  "
+echo -ne "  "
 einfo $(gettext "\(going back to: \${CUR_KERNEL}\)")
 pause
 
