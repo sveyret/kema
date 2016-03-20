@@ -1,0 +1,38 @@
+###############################################################################
+# Copyright © 2016 Stéphane Veyret stephane_DOT_veyret_AT_neptura_DOT_org
+#
+# This file is part of kema.
+#
+# kema is free software: you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+#
+# kema is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# kema.  If not, see <http://www.gnu.org/licenses/>.
+###############################################################################
+# This file should not be executed directly. It should be sourced by the main
+# kema script.
+###############################################################################
+KEMA_SYNTAX=
+KEMA_DESCRIPTION=$(gettext "Give help on kema")
+
+echo -e $(gettext "kema, the Gentoo kernel manager")
+echo
+echo -e $(gettext "kema have the following services:")
+for kema_cmd in ${KEMA_CORE_DIR}/kema-*; do
+  extracted=$(echo "${kema_cmd}" | perl -pe 's/^.*kema-//')
+  echo -ne "  \e[0;92m${extracted}\e[0m "
+  extracted=$(grep '^KEMA_SYNTAX=' "${kema_cmd}" | perl -pe 's/^KEMA_SYNTAX=\s*//')
+  eval echo -e "${extracted}"
+  extracted=$(grep '^KEMA_DESCRIPTION=' "${kema_cmd}" | perl -pe 's/^KEMA_DESCRIPTION=\s*//')
+  echo -ne "    "
+  eval echo -e "${extracted}"
+done
+echo
+echo -e $(gettext "You may only type the first letters of a service if there is no ambiguity")
+

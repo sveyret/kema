@@ -1,0 +1,106 @@
+#!/bin/bash
+###############################################################################
+# Copyright © 2016 Stéphane Veyret stephane_DOT_veyret_AT_neptura_DOT_org
+#
+# This file is part of kema.
+#
+# kema is free software: you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+#
+# kema is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# kema.  If not, see <http://www.gnu.org/licenses/>.
+###############################################################################
+
+###############################################################################
+# kema, the Gentoo kernel manager.
+###############################################################################
+
+# Kema variables
+: ${KEMA_CONFIG_FILE:=/etc/kema/kema.conf}
+: ${KEMA_CORE_DIR:=/usr/libexec/kema}
+: ${KEMA_VAR_DIR:=/var/lib/kema}
+: ${KEMA_SAVED_CONFIG:=${KEMA_VAR_DIR}/saved.config}
+: ${KEMA_ARCH:=${HOSTTYPE}}
+
+# Load configuration
+[[ -r "${KEMA_CONFIG_FILE}" ]] && . "${KEMA_CONFIG_FILE}"
+
+# Functions to display messages
+function einfo
+{
+  echo -e "\e[0;92m$(eval echo $@)\e[0m"
+}
+function ewarn
+{
+  echo -e "\e[0;93m$(eval echo $@)\e[0m"
+}
+function eerror
+{
+  echo -e "\e[0;91m$(eval echo $@)\e[0m" >&2
+}
+function efatal
+{
+  eerror "$@"
+  exit 1
+}
+function efatalhelp
+{
+  eerror "$@"
+  echo -e $(gettext "You may try")
+  echo -ne "  "
+  einfo "kema help"
+  echo -e $(gettext "to get more information")
+  exit 1
+}
+function pause
+{
+  echo -e $(gettext "Hit \"Enter\" to continue or Ctrl-C to stop now")
+  read
+}
+
+# Test if a test is pending
+function isTestPending
+{
+  if [[ -r "${KEMA_SAVED_CONFIG}" ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+# Ensure we have super-power
+[[ ${UID} == 0 ]] || efatal $(gettext "You must be super-user to run kema")
+
+# Load bootloader functions
+if [[ -z "${BOOTLOADER}" ]]; then
+  . "${KEMA_CORE_DIR}/default"
+elif [[ -r "${KEMA_CORE_DIR}/bootloader/${BOOTLOADER}" ]]; then
+  . "${KEMA_CORE_DIR}/bootloader/${BOOTLOADER}"
+else
+  efatal $(gettext "Could not find \${BOOTLOADER} bootloader file")
+fi
+
+# Which command was typed
+if [[ -z ${1} ]]; then
+  efatalhelp $(gettext "No command given to kema")
+elif [[ ${1} == "--help" ]]; then
+  . "${KEMA_CORE_DIR}/kema-help"
+elif [[ -r "${KEMA_CORE_DIR}/kema-${1}" ]]; then
+  KEMA_COMMAND="kema-${1}"
+  shift
+  . "${KEMA_CORE_DIR}/${KEMA_COMMAND}" "$@"
+elif [[ -r $(ls "${KEMA_CORE_DIR}/kema-${1}"*) ]]; then
+  KEMA_COMMAND="kema-${1}"
+  shift
+  . "${KEMA_CORE_DIR}/${KEMA_COMMAND}"* "$@"
+else
+  BAD_COMMAND=${1}
+  efatalhelp $(gettext "Unknown command: \${BAD_COMMAND}")
+fi
+

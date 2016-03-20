@@ -1,0 +1,90 @@
+###############################################################################
+# Copyright © 2016 Stéphane Veyret stephane_DOT_veyret_AT_neptura_DOT_org
+#
+# This file is part of kema.
+#
+# kema is free software: you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+#
+# kema is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# kema.  If not, see <http://www.gnu.org/licenses/>.
+###############################################################################
+# This file contains bootloader functions for gummiboot.
+# This file should not be executed directly. It should be sourced by the main
+# kema script.
+###############################################################################
+
+GUMMIBOOT_LOADER_CONF=/boot/loader/loader.conf
+GUMMIBOOT_ENTRIES=/boot/loader/entries
+
+###############################################################################
+# Check if expected configuration is installed. Do it if not.
+###############################################################################
+function _gummiboot_checkinstall
+{
+  if ! grep "^default gentoo-cur$" "${GUMMIBOOT_LOADER_CONF}" >/dev/null 2>&1 ; then
+
+    # Save existing configuration if any
+    if [[ -r "${GUMMIBOOT_LOADER_CONF}" ]] && [[ ! -r "${GUMMIBOOT_LOADER_CONF}"-kema ]]; then
+      mv "${GUMMIBOOT_LOADER_CONF}" "${GUMMIBOOT_LOADER_CONF}"-kema
+    fi
+
+    # Create loader configuration file
+	echo "default gentoo-cur" >"${GUMMIBOOT_LOADER_CONF}"
+
+  fi
+}
+
+###############################################################################
+# Get the current active kernel for Gummiboot.
+# Return the current kernel version (as per configuration) in standard output,
+# or empty if not found.
+###############################################################################
+function _gummiboot_getcurrent
+{
+  if [[ -r "${GUMMIBOOT_ENTRIES}/gentoo-cur.conf" ]]; then
+    head -n 1 "${GUMMIBOOT_ENTRIES}/gentoo-cur.conf" | perl -pe 's/\:\s(\S+)\s*$/$1/'
+  fi
+}
+
+###############################################################################
+# Set the current default kernel configuration as backup.
+###############################################################################
+function bootloader_backup
+{
+  extracted=$(_gummiboot_getcurrent)
+  if [[ -n ${CUR_KERNEL} ]]; then
+    mv "${GUMMIBOOT_ENTRIES}/gentoo-cur.conf" "${GUMMIBOOT_ENTRIES}/gentoo-${extracted}.conf"
+  fi
+}
+
+###############################################################################
+# Install a kernel configuration as default.
+# Parameters:
+#  1 - Kernel title.
+#  2 - Kernel file name.
+#  3 - Kernel version.
+###############################################################################
+function bootloader_install
+{
+  echo "# Kernel version: ${3}" >"${GUMMIBOOT_ENTRIES}/gentoo-cur.conf"
+  echo "title ${1}" >>"${GUMMIBOOT_ENTRIES}/gentoo-cur.conf"
+  echo "efi /${2}" >>"${GUMMIBOOT_ENTRIES}/gentoo-cur.conf"
+}
+
+###############################################################################
+# Remove a kernel configuration.
+# Parameters:
+#  1 - Kernel version.
+###############################################################################
+function bootloader_remove
+{
+  rm "${GUMMIBOOT_ENTRIES}/gentoo-${1}.conf"
+}
+

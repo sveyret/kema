@@ -1,0 +1,37 @@
+###############################################################################
+# Copyright © 2016 Stéphane Veyret stephane_DOT_veyret_AT_neptura_DOT_org
+#
+# This file is part of kema.
+#
+# kema is free software: you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+#
+# kema is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# kema.  If not, see <http://www.gnu.org/licenses/>.
+###############################################################################
+# This file should not be executed directly. It should be sourced by the main
+# kema script.
+###############################################################################
+KEMA_SYNTAX=
+KEMA_DESCRIPTION=$(gettext "Forget the backup kernel")
+
+# Check if backup kernel file exists
+if [[ ! -r ${KEMA_VAR_DIR}/backup ]]; then
+  efatal $(gettext "No backup kernel saved")
+fi
+
+# Warn user for unusual action
+ewarn $(gettext "I am about to forget the backup kernel")
+ewarn $(gettext "Even if you may require this to downgrade to a previous kernel,")
+ewarn $(gettext "this operation may be dangerous")
+pause
+
+# Forget
+rm -f ${KEMA_VAR_DIR}/backup
+

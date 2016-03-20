@@ -1,0 +1,60 @@
+###############################################################################
+# Copyright © 2016 Stéphane Veyret stephane_DOT_veyret_AT_neptura_DOT_org
+#
+# This file is part of kema.
+#
+# kema is free software: you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+#
+# kema is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# kema.  If not, see <http://www.gnu.org/licenses/>.
+###############################################################################
+# This file should not be executed directly. It should be sourced by the main
+# kema script.
+###############################################################################
+KEMA_SYNTAX=
+KEMA_DESCRIPTION=$(gettext "Test new kernel configuration")
+
+# Calculate current and test kernel
+CUR_KERNEL=$(uname -r | perl -pe 's/-.*//')
+TEST_KERNEL=${CUR_KERNEL}-Test
+
+# Information
+einfo $(gettext "Creating new test kernel: \${TEST_KERNEL}")
+echo -ne "  "
+einfo $(gettext "\(based on kernel: \${CUR_KERNEL}\)")
+pause
+
+# Generate new kernel
+cd /usr/src/linux
+if [[ -r .config ]]; then
+  mv .config .config.save 2>/dev/null
+fi
+if isTestPending; then
+  ewarn $(gettext "Test pending - no cleaning done")
+  cp ${KEMA_SAVED_CONFIG} .config 2>/dev/null
+else
+  make mrproper
+  cp .config.save .config 2>/dev/null
+fi
+make menuconfig
+make ${MAKE_OPTS} && make ${MAKE_OPTS} modules_install
+cd ..
+
+# Update boot
+cp linux/arch/x86_64/boot/bzImage /boot/kernel-${TEST_KERNEL}
+if ! isTestPending; then
+  bootloader_backup
+  bootloader_install "Gentoo test ${CUR_KERNEL}" "kernel-${TEST_KERNEL}" "${TEST_KERNEL}"
+fi
+
+# Save configuration files
+mv linux/.config ${KEMA_SAVED_CONFIG}
+mv linux/.config.save linux/.config 2>/dev/null
+

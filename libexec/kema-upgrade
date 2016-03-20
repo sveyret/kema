@@ -1,0 +1,123 @@
+###############################################################################
+# Copyright © 2016 Stéphane Veyret stephane_DOT_veyret_AT_neptura_DOT_org
+#
+# This file is part of kema.
+#
+# kema is free software: you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+#
+# kema is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# kema.  If not, see <http://www.gnu.org/licenses/>.
+###############################################################################
+# This file should not be executed directly. It should be sourced by the main
+# kema script.
+###############################################################################
+KEMA_SYNTAX=$(gettext "[KERNEL_VERSION]")
+KEMA_DESCRIPTION=$(gettext "Upgrade the kernel to newer or given version")
+
+# Check if a test is pending
+if isTestPending; then
+  eerror $(gettext "A test is currently in progress")
+  efatal $(gettext "You must either cancel or validate it before upgrading")
+fi
+
+# Check if backup kernel file exists
+if [[ ! -r ${KEMA_VAR_DIR}/backup ]]; then
+  touch ${KEMA_VAR_DIR}/backup
+fi
+
+# Read backup kernel
+BACK_KERNEL=$(cat ${KEMA_VAR_DIR}/backup)
+
+# Calculate current kernel version
+CUR_KERNEL=$(uname -r | perl -pe 's/-.*//')
+
+# Go to kernel sources directory
+cd /usr/src
+
+# Get new kernel
+NEW_KERNEL="${1}"
+if [[ -z ${NEW_KERNEL} ]]; then
+  # Search available kernels
+  NEW_KERNEL=$(ls -d linux-* | grep -v ${CUR_KERNEL})
+  if [[ -n ${BACK_KERNEL} ]]; then
+    NEW_KERNEL=$(echo "${NEW_KERNEL}" | grep -v ${BACK_KERNEL})
+  fi
+
+  # Check new kernel
+  if [[ $(echo "${NEW_KERNEL}" | wc -w) != "1" ]]; then
+    eerror $(gettext "kema could not guess new kernel version")
+    efatal $(gettext "Please specify version as parameter")
+  fi
+  NEW_KERNEL=$(echo ${NEW_KERNEL} | perl -pe 's/linux-(.*)-.*/$1/')
+fi
+
+# Check new kernel existance
+ls linux-${NEW_KERNEL}-* 2>/dev/null 1>&2 || \
+  efatal $(gettext "kema could not find kernel \${NEW_KERNEL}")
+
+# Compare backup and current kernel
+if [[ ${BACK_KERNEL} = ${CUR_KERNEL} ]]; then
+  eerror $(gettext "kema will not update kernel if you are currently using backup kernel")
+  efatal $(gettext "You may try to execute \"kema forget\" if you know what you are doing")
+fi
+
+# Information
+einfo $(gettext "Updating kernel")
+echo -ne "  "
+einfo $(gettext "New kernel: \${NEW_KERNEL}")
+echo -ne "  "
+einfo $(gettext "Current kernel \(kept for backup\): \${CUR_KERNEL}")
+einfo $(gettext "All other kernels will be removed")
+pause
+
+# Change kernel and copy configuration file
+cp linux/.config ./.config 2>/dev/null
+KERN_SELECT=$(eselect kernel list | grep ${NEW_KERNEL} | perl -pe 's/\s*\[(\d+)\].*/$1/')
+eselect kernel set ${KERN_SELECT}
+mv ./.config linux/.config 2>/dev/null
+
+# Generate initramfs
+if [[ "${INITRAMFS}" == "-" ]]; then
+  rm -rf /tmp/genkernel 2>/dev/null
+  genkernel --no-install --tempdir=/tmp/genkernel ${GENKERNEL_OPTS} initramfs
+  INITRAMFS=/tmp/genkernel/initramfs*
+fi
+if [[ -n "${INITRAMFS}" ]]; then
+  zcat "${INITRAMFS}" >linux/initramfs.cpio 2>/dev/null || \
+    xzcat "${INITRAMFS}" >linux/initramfs.cpio 2>/dev/null || \
+    cp "${INITRAMFS}" linux/initramfs.cpio
+fi
+
+# Generate new kernel
+cd linux
+for p in ${PATCH_DIR}/*.patch; do
+  patch -p1 <"${p}"
+done
+if [[ -r .config ]]; then
+  make olddefconfig
+fi
+make menuconfig
+make ${MAKE_OPTS} && make ${MAKE_OPTS} modules_install
+cd ..
+
+# Update boot
+cp linux/arch/${KEMA_ARCH}/boot/bzImage /boot/kernel-${NEW_KERNEL}
+bootloader_backup
+bootloader_install "Gentoo ${NEW_KERNEL}" "kernel-${NEW_KERNEL}" "${NEW_KERNEL}"
+for kernel in $(ls -d linux-* | grep -v ${CUR_KERNEL} | grep -v ${NEW_KERNEL}); do
+  extracted=$(echo ${kernel} | perl -pe 's/linux-(.*)-.*/$1/')
+  bootloader_remove "${extracted}"
+  rm /boot/kernel-${extracted}
+  rm -rf linux-${extracted}-*
+done
+
+# Save backup kernel version
+echo "${CUR_KERNEL}" >${KEMA_VAR_DIR}/backup
+

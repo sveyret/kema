@@ -1,0 +1,53 @@
+###############################################################################
+# Copyright © 2016 Stéphane Veyret stephane_DOT_veyret_AT_neptura_DOT_org
+#
+# This file is part of kema.
+#
+# kema is free software: you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+#
+# kema is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# kema.  If not, see <http://www.gnu.org/licenses/>.
+###############################################################################
+# This file should not be executed directly. It should be sourced by the main
+# kema script.
+###############################################################################
+KEMA_SYNTAX=
+KEMA_DESCRIPTION=$(gettext "Validate configuration modifications of pending test")
+
+# Check if a test is pending
+if ! isTestPending; then
+  efatal $(gettext "No test pending")
+fi
+
+# Calculate current and test kernel
+CUR_KERNEL=$(uname -r | perl -pe 's/-.*//')
+TEST_KERNEL=${CUR_KERNEL}-Test
+
+# Check test kernel existance
+if [[ ! -r /boot/kernel-${TEST_KERNEL} ]]; then
+  eerror $(gettext "Cannot find test kernel \${TEST_KERNEL}")
+  efatal $(gettext "kema is not in stable situation")
+fi
+
+# Information
+einfo $(gettext "Validating configuration modifications done on: \${TEST_KERNEL}")
+echo -e "  "
+einfo $(gettext "\(replacing: \${CUR_KERNEL}\)")
+pause
+
+# Use configuration test as default configuration
+cd /usr/src/linux
+mv ${KEMA_SAVED_CONFIG} .config
+
+# Update boot
+bootloader_remove ${CUR_KERNEL}
+bootloader_install "Gentoo ${CUR_KERNEL}" "kernel-${CUR_KERNEL}" "${CUR_KERNEL}"
+mv /boot/kernel-${TEST_KERNEL} /boot/kernel-${CUR_KERNEL}
+
