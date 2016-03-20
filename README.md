@@ -30,7 +30,7 @@ A Makefile is provided to compile messages. Installation can simply done by copy
     DEST=/
     LINGUAS=fr
     make
-    cp -R sbin usr etc ${DEST}
+    cp -R usr etc ${DEST}
     cp po/${LINGUAS}.mo /usr/share/locale/${LINGUAS}/LC_MESSAGES/kema.mo
 
 # Usage

@@ -28,7 +28,7 @@ Un Makefile est fourni pour compiler les messages. L'installation se fait simple
     DEST=/
     LINGUAS=fr
     make
-    cp -R sbin usr etc ${DEST}
+    cp -R usr etc ${DEST}
     cp po/${LINGUAS}.mo /usr/share/locale/${LINGUAS}/LC_MESSAGES/kema.mo
 
 # Mode d'emploi
