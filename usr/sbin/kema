@@ -82,6 +82,7 @@ function isTestPending
 
 # Load bootloader functions
 if [[ -z "${BOOTLOADER}" ]]; then
+  ewarn $(gettext "No bootloader defined, using default one")
   . "${KEMA_BOOTLOADER_DIR}/default"
 elif [[ -r "${KEMA_BOOTLOADER_DIR}/${BOOTLOADER}" ]]; then
   . "${KEMA_BOOTLOADER_DIR}/${BOOTLOADER}"
