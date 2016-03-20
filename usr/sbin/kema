@@ -29,6 +29,8 @@
 : ${KEMA_SAVED_CONFIG:=${KEMA_VAR_DIR}/saved.config}
 : ${KEMA_ARCH:=${HOSTTYPE}}
 
+export TEXTDOMAIN=kema
+
 # Load configuration
 [[ -r "${KEMA_CONFIG_FILE}" ]] && . "${KEMA_CONFIG_FILE}"
 
