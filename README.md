@@ -23,6 +23,16 @@ kema is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
 You should have received a copy of the GNU General Public License along with kema.  If not, see <http://www.gnu.org/licenses/>.
 
+# Install
+
+A Makefile is provided to compile messages. Installation can simply done by copying files in appropiate location.
+
+    DEST=/
+    LINGUAS=fr
+    make
+    cp -R sbin usr etc $DEST
+    cp po/${LINGUAS}.mo /usr/share/locale/${LINGUAS}/LC_MESSAGES/kema.mo
+
 # Usage
 
 Before using kema, ensure that configuration file /etc/kema/kema.conf matches your needs. The default configuration file contains self-explanatory comments.
