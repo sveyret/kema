@@ -6,7 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: kema 0.2\n"
+"Project-Id-Version: kema 0.3\n"
 "Report-Msgid-Bugs-To: Stéphane Veyret\n"
 "POT-Creation-Date: 2016-03-20 20:29+0100\n"
 "PO-Revision-Date: 2016-03-20 20:29+0100\n"
@@ -17,196 +17,205 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: usr/sbin/kema:58
-msgid "You may try"
-msgstr "Vous pouvez essayer la commande"
-
-#: usr/sbin/kema:61
-msgid "to get more information"
-msgstr "pour plus d\\'information"
-
-#: usr/sbin/kema:66
-msgid "Hit \"Enter\" to continue or Ctrl-C to stop now"
-msgstr ""
-"Appuyez sur « Entrée » pour continuer ou Ctrl-C pour arrêter maintenant"
-
-#: sbin/kema:78 usr/sbin/kema:81
-msgid "You must be super-user to run kema"
-msgstr "Vous devez être super-utilisateur pour utiliser kema"
-
-#: usr/sbin/kema:90
-#, sh-format
-msgid "Could not find ${BOOTLOADER} bootloader file"
-msgstr "Impossible de trouver le fichier d\\'amorçage ${BOOTLOADER}"
-
-#: usr/sbin/kema:95
-msgid "No command given to kema"
-msgstr "Aucune commande donnée à kema"
-
-#: usr/sbin/kema:108
-#, sh-format
-msgid "Unknown command: ${BAD_COMMAND}"
-msgstr "Commande ${BAD_COMMAND} inconnue"
-
 #: usr/libexec/kema/kema-cancel:22
+#, sh-format
 msgid "Cancel pending test, remove configuration modifications"
 msgstr ""
 "Annuler les tests en cours, supprimer les modifications de configuration"
 
 #: usr/libexec/kema/kema-cancel:26 usr/libexec/kema/kema-valid:26
+#, sh-format
 msgid "No test pending"
 msgstr "Aucun test en cours"
 
 #: usr/libexec/kema/kema-cancel:35 usr/libexec/kema/kema-valid:35
 #, sh-format
-msgid "Cannot find test kernel ${TEST_KERNEL}"
-msgstr "Impossible de trouver le noyau de test ${TEST_KERNEL}"
-
-#: usr/libexec/kema/kema-cancel:36 usr/libexec/kema/kema-valid:36
-msgid "kema is not in stable situation"
-msgstr "kema est dans une situation instable"
-
-#: usr/libexec/kema/kema-cancel:40
-#, sh-format
-msgid "Canceling configuration modifications done on: ${TEST_KERNEL}"
+msgid "Cannot find test kernel ${TEST_KERNEL}\\nkema is not in stable state"
 msgstr ""
-"Annulation des modifications de configuration faites sur : ${TEST_KERNEL}"
+"Impossible de trouver le noyau de test ${TEST_KERNEL}\\nkema n'est pas dans "
+"un état stable"
 
-#: usr/libexec/kema/kema-cancel:42
+#: usr/libexec/kema/kema-cancel:39
 #, sh-format
-msgid "\\(going back to: ${CUR_KERNEL}\\)"
-msgstr "\\(retour à : ${CUR_KERNEL}\\)"
+msgid ""
+"Canceling configuration modifications done on: ${TEST_KERNEL}\\n  (going "
+"back to: ${CUR_KERNEL})"
+msgstr ""
+"Annulation des modifications de configuration faites sur : "
+"${TEST_KERNEL}\\n  (retour à : ${CUR_KERNEL})"
 
 #: usr/libexec/kema/kema-forget:22
+#, sh-format
 msgid "Forget the backup kernel"
 msgstr "Oublier le noyau de secours"
 
 #: usr/libexec/kema/kema-forget:26
+#, sh-format
 msgid "No backup kernel saved"
 msgstr "Aucun noyau de secours enregistré"
 
 #: usr/libexec/kema/kema-forget:30
+#, sh-format
 msgid "I am about to forget the backup kernel"
-msgstr "Je suis sur le point d\\'oublier le noyau de secours"
+msgstr "Je suis sur le point d'oublier le noyau de secours"
 
 #: usr/libexec/kema/kema-forget:31
-msgid "Even if you may require this to downgrade to a previous kernel,"
-msgstr "Même si cela peut être utile pour redescendre vers un noyau précédent,"
-
-#: usr/libexec/kema/kema-forget:32
-msgid "this operation may be dangerous"
-msgstr "cette opération n\\'est pas sans risque"
+#, sh-format
+msgid ""
+"Even if you may require this to downgrade to a previous kernel,\\nthis "
+"operation may be dangerous"
+msgstr ""
+"Même si cela peut être utile pour redescendre vers un noyau précédent,"
+"\\ncette opération n'est pas sans risque"
 
 #: usr/libexec/kema/kema-help:22
+#, sh-format
 msgid "Give help on kema"
-msgstr "Donne de l\\'aide sur kema"
+msgstr "Donner de l'aide sur kema"
 
 #: usr/libexec/kema/kema-help:24
+#, sh-format
 msgid "kema, the Gentoo kernel manager"
 msgstr "kema, le gestionnaire de noyau pour Gentoo"
 
 #: usr/libexec/kema/kema-help:26
+#, sh-format
 msgid "kema has the following services:"
 msgstr "kema a les services suivants :"
 
 #: usr/libexec/kema/kema-help:37
+#, sh-format
 msgid ""
 "You may only type the first letters of a service if there is no ambiguity"
 msgstr ""
 "Vous pouvez ne taper que les premières lettres du service si cela ne cause "
-"pas d\\'ambigüité"
+"pas d'ambigüité"
 
 #: usr/libexec/kema/kema-test:22
+#, sh-format
 msgid "Test new kernel configuration"
 msgstr "Tester une nouvelle configuration noyau"
 
 #: usr/libexec/kema/kema-test:29
 #, sh-format
-msgid "Creating new test kernel: ${TEST_KERNEL}"
-msgstr "Création d\\'un nouveau noyau de test : ${TEST_KERNEL}"
+msgid ""
+"Creating new test kernel: ${TEST_KERNEL}\\n  (based on kernel: ${CUR_KERNEL})"
+msgstr ""
+"Création d'un nouveau noyau de test : ${TEST_KERNEL}\\n  (basé sur le "
+"noyau : ${CUR_KERNEL})"
 
-#: usr/libexec/kema/kema-test:31
+#: usr/libexec/kema/kema-test:38
 #, sh-format
-msgid "\\(based on kernel: ${CUR_KERNEL}\\)"
-msgstr "\\(basé sur le noyau : ${CUR_KERNEL}\\)"
-
-#: usr/libexec/kema/kema-test:40
 msgid "Test pending - no cleaning done"
 msgstr "Test en cours - pas de nettoyage"
 
 #: usr/libexec/kema/kema-upgrade:21
+#, sh-format
 msgid "[KERNEL_VERSION]"
 msgstr "[VERSION_NOYAU]"
 
 #: usr/libexec/kema/kema-upgrade:22
+#, sh-format
 msgid "Upgrade the kernel to newer or given version"
 msgstr "Mettre à jour le noyau à une nouvelle version ou la version indiquée"
 
 #: usr/libexec/kema/kema-upgrade:26
-msgid "A test is currently in progress"
-msgstr "Un test est en cours"
+#, sh-format
+msgid ""
+"A test is currently in progress\\nYou must either cancel or validate it "
+"before upgrading"
+msgstr ""
+"Un test est actuellement en cours\\nVous devez soit l'annuler, soit le "
+"valider avant la mise à jour"
 
-#: usr/libexec/kema/kema-upgrade:27
-msgid "You must either cancel or validate it before upgrading"
-msgstr "Vous devez soit l\\'annuler, soit le valider avant la mise à jour"
+#: usr/libexec/kema/kema-upgrade:54
+#, sh-format
+msgid ""
+"kema could not guess new kernel version\\nPlease specify version as parameter"
+msgstr ""
+"kema n'a pas pu deviner la version du nouveau noyau\\nVeuillez indiquer la "
+"version en paramètre"
 
-#: usr/libexec/kema/kema-upgrade:55
-msgid "kema could not guess new kernel version"
-msgstr "kema n\\'a pas pu deviner la version du nouveau noyau"
-
-#: usr/libexec/kema/kema-upgrade:56
-msgid "Please specify version as parameter"
-msgstr "Veuillez indiquer la version en parametre"
-
-#: usr/libexec/kema/kema-upgrade:63
+#: usr/libexec/kema/kema-upgrade:61
 #, sh-format
 msgid "kema could not find kernel ${NEW_KERNEL}"
-msgstr "kema n\\'a pas pu trouver le noyau ${NEW_KERNEL}"
+msgstr "kema n'a pas pu trouver le noyau ${NEW_KERNEL}"
 
-#: usr/libexec/kema/kema-upgrade:67
-msgid "kema will not update kernel if you are currently using backup kernel"
+#: usr/libexec/kema/kema-upgrade:65
+#, sh-format
+msgid ""
+"kema will not update kernel if you are currently using backup kernel\\nYou "
+"may try to execute \"kema forget\" if you know what you are doing"
 msgstr ""
 "kema ne mettra pas le noyau à jour si vous êtes sur le noyau de secours"
-
-#: usr/libexec/kema/kema-upgrade:68
-msgid "You may try to execute \"kema forget\" if you know what you are doing"
-msgstr ""
-"Vous pouvez essayer d\\'exécuter « kema forget » si vous savez ce que vous "
+"\\nVous pouvez essayer d'exécuter « kema forget » si vous savez ce que vous "
 "faites"
 
-#: usr/libexec/kema/kema-upgrade:72
-msgid "Updating kernel"
-msgstr "Mise à jour du noyau"
-
-#: usr/libexec/kema/kema-upgrade:74
+#: usr/libexec/kema/kema-upgrade:69
 #, sh-format
-msgid "New kernel: ${NEW_KERNEL}"
-msgstr "Nouveau noyau : ${NEW_KERNEL}"
+msgid ""
+"Updating kernel\\n  New kernel: ${NEW_KERNEL}\\n  Current kernel (kept for "
+"backup): ${CUR_KERNEL}"
+msgstr ""
+"Mise à jour du noyau\\n  Nouveau noyau : ${NEW_KERNEL}\\n  Noyau actuel "
+"(conservé en secours) : ${CUR_KERNEL}"
 
-#: usr/libexec/kema/kema-upgrade:76
+#: usr/libexec/kema/kema-upgrade:70
 #, sh-format
-msgid "Current kernel \\(kept for backup\\): ${CUR_KERNEL}"
-msgstr "Noyau actuel \\(conservé en secours\\) : ${CUR_KERNEL}"
-
-#: usr/libexec/kema/kema-upgrade:77
 msgid "All other kernels will be removed"
 msgstr "Tous les autres noyaux seront supprimés"
 
 #: usr/libexec/kema/kema-valid:22
+#, sh-format
 msgid "Validate configuration modifications of pending test"
-msgstr "Valider les modifications de configuration d\\'un test en cours"
+msgstr "Valider les modifications de configuration d'un test en cours"
 
-#: usr/libexec/kema/kema-valid:40
+#: usr/libexec/kema/kema-valid:39
 #, sh-format
-msgid "Validating configuration modifications done on: ${TEST_KERNEL}"
+msgid ""
+"Validating configuration modifications done on: ${TEST_KERNEL}\\n  "
+"(replacing: ${CUR_KERNEL})"
 msgstr ""
-"Validation des modifications de configuration effectuées sur : ${TEST_KERNEL}"
+"Validation des modifications de configuration effectuées sur : "
+"${TEST_KERNEL}\\n  (en remplacement de : ${CUR_KERNEL})"
 
-#: usr/libexec/kema/kema-valid:42
+#: usr/sbin/kema:61
 #, sh-format
-msgid "\\(replacing: ${CUR_KERNEL}\\)"
-msgstr "\\(en remplacement de : ${CUR_KERNEL}\\)"
+msgid "You may try"
+msgstr "Vous pouvez essayer la commande"
 
-#: usr/sbin/kema:85
+#: usr/sbin/kema:63
+#, sh-format
+msgid "to get more information"
+msgstr "pour plus d'information"
+
+#: usr/sbin/kema:68
+#, sh-format
+msgid "Hit \"Enter\" to continue or Ctrl-C to stop now"
+msgstr ""
+"Appuyez sur « Entrée » pour continuer ou Ctrl-C pour arrêter maintenant"
+
+#: usr/sbin/kema:83
+#, sh-format
+msgid "You must be super-user to run kema"
+msgstr "Vous devez être super-utilisateur pour utiliser kema"
+
+#: usr/sbin/kema:87
+#, sh-format
 msgid "No bootloader defined, using default one"
-msgstr "Aucun gestionnaire d\\'amorçage défini, utilisation de celui par défaut"
+msgstr "Aucun gestionnaire d'amorçage défini, utilisation de celui par défaut"
+
+#: usr/sbin/kema:92
+#, sh-format
+msgid "Could not find ${BOOTLOADER} bootloader file"
+msgstr "Impossible de trouver le fichier d'amorçage ${BOOTLOADER}"
+
+#: usr/sbin/kema:97
+#, sh-format
+msgid "No command given to kema"
+msgstr "Aucune commande donnée à kema"
+
+#: usr/sbin/kema:110
+#, sh-format
+msgid "Unknown command: ${BAD_COMMAND}"
+msgstr "Commande ${BAD_COMMAND} inconnue"

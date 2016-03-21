@@ -19,11 +19,11 @@
 # kema script.
 ###############################################################################
 KEMA_SYNTAX=
-KEMA_DESCRIPTION=$(gettext "Validate configuration modifications of pending test")
+KEMA_DESCRIPTION=$(eval_gettext "Validate configuration modifications of pending test")
 
 # Check if a test is pending
 if ! isTestPending; then
-  efatal $(gettext "No test pending")
+  eerror $(eval_gettext "No test pending")
 fi
 
 # Calculate current and test kernel
@@ -32,14 +32,11 @@ TEST_KERNEL=${CUR_KERNEL}-Test
 
 # Check test kernel existance
 if [[ ! -r /boot/kernel-${TEST_KERNEL} ]]; then
-  eerror $(gettext "Cannot find test kernel \${TEST_KERNEL}")
-  efatal $(gettext "kema is not in stable situation")
+  eerror $(eval_gettext "Cannot find test kernel \${TEST_KERNEL}\\nkema is not in stable state")
 fi
 
 # Information
-einfo $(gettext "Validating configuration modifications done on: \${TEST_KERNEL}")
-echo -ne "  "
-einfo $(gettext "\(replacing: \${CUR_KERNEL}\)")
+einfo $(eval_gettext "Validating configuration modifications done on: \${TEST_KERNEL}\\n  (replacing: \${CUR_KERNEL})")
 pause
 
 # Use configuration test as default configuration

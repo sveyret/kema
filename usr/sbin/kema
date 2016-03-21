@@ -19,6 +19,7 @@
 
 ###############################################################################
 # kema, the Gentoo kernel manager.
+# Version: 0.3
 ###############################################################################
 
 # Kema variables
@@ -31,39 +32,40 @@
 
 export TEXTDOMAIN=kema
 
+KRED="\e[0;91m"
+KGREEN="\e[0;92m"
+KYELLOW="\e[0;93m"
+KNORMAL="\e[0m"
+
 # Load configuration
 [[ -r "${KEMA_CONFIG_FILE}" ]] && . "${KEMA_CONFIG_FILE}"
+. gettext.sh
 
 # Functions to display messages
 function einfo
 {
-  echo -e "\e[0;92m$(eval echo $@)\e[0m"
+  echo -e "${KGREEN}$@${KNORMAL}"
 }
 function ewarn
 {
-  echo -e "\e[0;93m$(eval echo $@)\e[0m"
+  echo -e "${KYELLOW}$@${KNORMAL}"
 }
 function eerror
 {
-  echo -e "\e[0;91m$(eval echo $@)\e[0m" >&2
-}
-function efatal
-{
-  eerror "$@"
+  echo -e "${KRED}$@${KNORMAL}" >&2
   exit 1
 }
-function efatalhelp
+function ehelp
 {
-  eerror "$@"
-  echo -e $(gettext "You may try")
-  echo -ne "  "
-  einfo "kema help"
-  echo -e $(gettext "to get more information")
+  echo -e "${KRED}$@${KNORMAL}" >&2
+  echo -e $(eval_gettext "You may try")
+  echo -e "${KGREEN}  kema help${KNORMAL}"
+  echo -e $(eval_gettext "to get more information")
   exit 1
 }
 function pause
 {
-  echo -e $(gettext "Hit \"Enter\" to continue or Ctrl-C to stop now")
+  echo -e $(eval_gettext "Hit \"Enter\" to continue or Ctrl-C to stop now")
   read
 }
 
@@ -78,33 +80,33 @@ function isTestPending
 }
 
 # Ensure we have super-power
-[[ ${UID} == 0 ]] || efatal $(gettext "You must be super-user to run kema")
+[[ ${UID} == 0 ]] || eerror $(eval_gettext "You must be super-user to run kema")
 
 # Load bootloader functions
 if [[ -z "${BOOTLOADER}" ]]; then
-  ewarn $(gettext "No bootloader defined, using default one")
+  ewarn $(eval_gettext "No bootloader defined, using default one")
   . "${KEMA_BOOTLOADER_DIR}/default"
 elif [[ -r "${KEMA_BOOTLOADER_DIR}/${BOOTLOADER}" ]]; then
   . "${KEMA_BOOTLOADER_DIR}/${BOOTLOADER}"
 else
-  efatal $(gettext "Could not find \${BOOTLOADER} bootloader file")
+  eerror $(eval_gettext "Could not find \${BOOTLOADER} bootloader file")
 fi
 
 # Which command was typed
 if [[ -z ${1} ]]; then
-  efatalhelp $(gettext "No command given to kema")
+  ehelp $(eval_gettext "No command given to kema")
 elif [[ ${1} == "--help" ]]; then
   . "${KEMA_CORE_DIR}/kema-help"
 elif [[ -r "${KEMA_CORE_DIR}/kema-${1}" ]]; then
   KEMA_COMMAND="kema-${1}"
   shift
   . "${KEMA_CORE_DIR}/${KEMA_COMMAND}" "$@"
-elif [[ -r $(ls "${KEMA_CORE_DIR}/kema-${1}"*) ]]; then
+elif [[ -r $(ls "${KEMA_CORE_DIR}/kema-${1}"* 2>/dev/null) ]]; then
   KEMA_COMMAND="kema-${1}"
   shift
   . "${KEMA_CORE_DIR}/${KEMA_COMMAND}"* "$@"
 else
-  BAD_COMMAND=${1}
-  efatalhelp $(gettext "Unknown command: \${BAD_COMMAND}")
+  BAD_COMMAND="${1}"
+  ehelp $(eval_gettext "Unknown command: \${BAD_COMMAND}")
 fi
 

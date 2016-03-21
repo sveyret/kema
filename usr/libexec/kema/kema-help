@@ -19,14 +19,14 @@
 # kema script.
 ###############################################################################
 KEMA_SYNTAX=
-KEMA_DESCRIPTION=$(gettext "Give help on kema")
+KEMA_DESCRIPTION=$(eval_gettext "Give help on kema")
 
-echo -e $(gettext "kema, the Gentoo kernel manager")
+echo -e $(eval_gettext "kema, the Gentoo kernel manager")
 echo
-echo -e $(gettext "kema has the following services:")
+echo -e $(eval_gettext "kema has the following services:")
 for kema_cmd in ${KEMA_CORE_DIR}/kema-*; do
   extracted=$(echo "${kema_cmd}" | perl -pe 's!^.*/kema-!!')
-  echo -ne "  \e[0;92m${extracted}\e[0m "
+  echo -ne "  ${KGREEN}${extracted}${KNORMAL} "
   extracted=$(grep '^KEMA_SYNTAX=' "${kema_cmd}" | perl -pe 's/^KEMA_SYNTAX=\s*//')
   eval echo -e "${extracted}"
   extracted=$(grep '^KEMA_DESCRIPTION=' "${kema_cmd}" | perl -pe 's/^KEMA_DESCRIPTION=\s*//')
@@ -34,5 +34,5 @@ for kema_cmd in ${KEMA_CORE_DIR}/kema-*; do
   eval echo -e "${extracted}"
 done
 echo
-echo -e $(gettext "You may only type the first letters of a service if there is no ambiguity")
+echo -e $(eval_gettext "You may only type the first letters of a service if there is no ambiguity")
 

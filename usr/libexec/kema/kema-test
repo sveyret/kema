@@ -19,16 +19,14 @@
 # kema script.
 ###############################################################################
 KEMA_SYNTAX=
-KEMA_DESCRIPTION=$(gettext "Test new kernel configuration")
+KEMA_DESCRIPTION=$(eval_gettext "Test new kernel configuration")
 
 # Calculate current and test kernel
 CUR_KERNEL=$(uname -r | perl -pe 's/-.*//')
 TEST_KERNEL=${CUR_KERNEL}-Test
 
 # Information
-einfo $(gettext "Creating new test kernel: \${TEST_KERNEL}")
-echo -ne "  "
-einfo $(gettext "\(based on kernel: \${CUR_KERNEL}\)")
+einfo $(eval_gettext "Creating new test kernel: \${TEST_KERNEL}\\n  (based on kernel: \${CUR_KERNEL})")
 pause
 
 # Generate new kernel
@@ -37,7 +35,7 @@ if [[ -r .config ]]; then
   mv .config .config.save 2>/dev/null
 fi
 if isTestPending; then
-  ewarn $(gettext "Test pending - no cleaning done")
+  ewarn $(eval_gettext "Test pending - no cleaning done")
   cp ${KEMA_SAVED_CONFIG} .config 2>/dev/null
 else
   make mrproper

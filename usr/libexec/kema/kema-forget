@@ -19,17 +19,16 @@
 # kema script.
 ###############################################################################
 KEMA_SYNTAX=
-KEMA_DESCRIPTION=$(gettext "Forget the backup kernel")
+KEMA_DESCRIPTION=$(eval_gettext "Forget the backup kernel")
 
 # Check if backup kernel file exists
 if [[ ! -r ${KEMA_VAR_DIR}/backup ]]; then
-  efatal $(gettext "No backup kernel saved")
+  eerror $(eval_gettext "No backup kernel saved")
 fi
 
 # Warn user for unusual action
-ewarn $(gettext "I am about to forget the backup kernel")
-ewarn $(gettext "Even if you may require this to downgrade to a previous kernel,")
-ewarn $(gettext "this operation may be dangerous")
+ewarn $(eval_gettext "I am about to forget the backup kernel")
+ewarn $(eval_gettext "Even if you may require this to downgrade to a previous kernel,\\nthis operation may be dangerous")
 pause
 
 # Forget
