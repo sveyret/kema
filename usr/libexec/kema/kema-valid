@@ -40,8 +40,7 @@ einfo $(eval_gettext "Validating configuration modifications done on: \${TEST_KE
 pause
 
 # Use configuration test as default configuration
-cd /usr/src/linux
-mv ${KEMA_SAVED_CONFIG} .config
+mv ${KEMA_SAVED_CONFIG} /usr/src/linux/.config
 
 # Update boot
 bootloader_remove ${CUR_KERNEL}
