@@ -53,7 +53,7 @@ If you want to test changes on current kernel options, you can execute:
 
     kema test
 
-This will open the kernel configuration menu. Once your modifications are done, exit the menu. This will create a new kernel with the given options. The tested options will be saved, but the .config file will be the one of the non-tested kernel. If your tests are valid, terminate with the command:
+This will open the kernel configuration menu. Once your modifications are done, exit the menu. This will create a new kernel with the given options. The current options will be saved. If your tests are valid, terminate with the command:
 
     kema valid
 
@@ -65,7 +65,13 @@ This will set the default kernel back and delete the tested modifications.
 
 # Tasks
 
+## Version 1.0
+
 - [ ] Add kernel options and initrd management in gummiboot.
 - [ ] Add efi bootloader.
+
+## Future version
+
 - [ ] Add other bootloaders.
+- [ ] Add other translations.
 

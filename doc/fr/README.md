@@ -51,7 +51,7 @@ Si vous souhaitez tester des modifications d'options sur le noyau courant, vous 
 
     kema test
 
-Cela ouvrira le menu de configuration de noyau. Une fois que les modifications sont faites, quittez le menu. Cela créera un nouveau noyau avec les options sélectionnées. Ces options seront enregistrées, mais le fichier .config restera celui du noyau non testé. Si les tests réussissent, terminez avec la commande :
+Cela ouvrira le menu de configuration de noyau. Une fois que les modifications sont faites, quittez le menu. Cela créera un nouveau noyau avec les options sélectionnées. Les options du noyau courant seront sauvegardées. Si les tests réussissent, terminez avec la commande :
 
     kema valid
 
@@ -63,7 +63,13 @@ Cela remettra le noyau par défaut en place et supprimera les modifications test
 
 # Tâches
 
+## Version 1.0
+
 - [ ] Ajouter la gestion des options de noyau et initrd dans gummiboot.
 - [ ] Ajouter le gestionnaire d'amorçage efi.
+
+## Future version
+
 - [ ] Ajouter d'autres gestionnaires d'amorçage.
+- [ ] Ajouter d'autres traductions.
 
