@@ -67,8 +67,8 @@ This will set the default kernel back and delete the tested modifications.
 
 ## Version 1.0
 
-- [ ] Add kernel options and initrd management in gummiboot.
-- [ ] Add efi bootloader.
+- [ ] Add kernel options and initrd management.
+- [x] Add efi bootloader.
 
 ## Future version
 

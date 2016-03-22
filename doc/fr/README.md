@@ -65,8 +65,8 @@ Cela remettra le noyau par défaut en place et supprimera les modifications test
 
 ## Version 1.0
 
-- [ ] Ajouter la gestion des options de noyau et initrd dans gummiboot.
-- [ ] Ajouter le gestionnaire d'amorçage efi.
+- [ ] Ajouter la gestion des options de noyau et initrd.
+- [x] Ajouter le gestionnaire d'amorçage efi.
 
 ## Future version
 
