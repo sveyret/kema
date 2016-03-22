@@ -43,7 +43,7 @@ function bootloader_install
 ###############################################################################
 # Remove a kernel configuration.
 # Parameters:
-#  1 - Kernel version. The kernel file is /boot/kernel-${2}.
+#  1 - Kernel version. The kernel file is /boot/kernel-${1}.
 ###############################################################################
 function bootloader_remove
 {
