@@ -31,15 +31,13 @@ pause
 
 # Generate new kernel
 cd /usr/src/linux
-if [[ -r .config ]]; then
-  mv .config .config.save 2>/dev/null
-fi
 if isTestPending; then
   ewarn $(eval_gettext "Test pending - no cleaning done")
-  cp ${KEMA_SAVED_CONFIG} .config 2>/dev/null
 else
+  if [[ -r .config ]]; then
+    cp .config ${KEMA_SAVED_CONFIG}
+  fi
   make mrproper
-  cp .config.save .config 2>/dev/null
 fi
 make menuconfig
 make ${MAKE_OPTS} && make ${MAKE_OPTS} modules_install
@@ -51,8 +49,4 @@ if ! isTestPending; then
   bootloader_backup
   bootloader_install "Gentoo test ${CUR_KERNEL}" "kernel-${TEST_KERNEL}" "${TEST_KERNEL}"
 fi
-
-# Save configuration files
-mv linux/.config ${KEMA_SAVED_CONFIG}
-mv linux/.config.save linux/.config 2>/dev/null
 

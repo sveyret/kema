@@ -39,8 +39,8 @@ fi
 einfo $(eval_gettext "Validating configuration modifications done on: \${TEST_KERNEL}\\n  (replacing: \${CUR_KERNEL})")
 pause
 
-# Use configuration test as default configuration
-mv ${KEMA_SAVED_CONFIG} /usr/src/linux/.config
+# Remove (old) saved configuration
+rm -f ${KEMA_SAVED_CONFIG}
 
 # Update boot
 bootloader_remove ${CUR_KERNEL}
