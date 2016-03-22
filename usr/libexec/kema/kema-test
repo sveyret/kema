@@ -47,6 +47,6 @@ cd ..
 cp linux/arch/x86_64/boot/bzImage /boot/kernel-${TEST_KERNEL}
 if ! isTestPending; then
   bootloader_backup
-  bootloader_install "Gentoo test ${CUR_KERNEL}" "kernel-${TEST_KERNEL}" "${TEST_KERNEL}"
+  bootloader_install "Gentoo test ${CUR_KERNEL}" "${TEST_KERNEL}"
 fi
 

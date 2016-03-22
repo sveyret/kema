@@ -103,7 +103,7 @@ cd ..
 # Update boot
 cp linux/arch/${KEMA_ARCH}/boot/bzImage /boot/kernel-${NEW_KERNEL}
 bootloader_backup
-bootloader_install "Gentoo ${NEW_KERNEL}" "kernel-${NEW_KERNEL}" "${NEW_KERNEL}"
+bootloader_install "Gentoo ${NEW_KERNEL}" "${NEW_KERNEL}"
 for kernel in $(ls -d linux-* | grep -v ${CUR_KERNEL} | grep -v ${NEW_KERNEL}); do
   extracted=$(echo ${kernel} | perl -pe 's/linux-(.*)-.*/$1/')
   bootloader_remove "${extracted}"

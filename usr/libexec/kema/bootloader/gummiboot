@@ -16,6 +16,7 @@
 # kema.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 # This file contains bootloader functions for gummiboot.
+# It is expected the /boot directory to be the root of the EFI partition.
 # This file should not be executed directly. It should be sourced by the main
 # kema script.
 ###############################################################################
@@ -68,20 +69,19 @@ function bootloader_backup
 # Install a kernel configuration as default.
 # Parameters:
 #  1 - Kernel title.
-#  2 - Kernel file name.
-#  3 - Kernel version.
+#  2 - Kernel version. The kernel file is /boot/kernel-${2}.
 ###############################################################################
 function bootloader_install
 {
-  echo "# Kernel version: ${3}" >"${GUMMIBOOT_ENTRIES}/gentoo-cur.conf"
+  echo "# Kernel version: ${2}" >"${GUMMIBOOT_ENTRIES}/gentoo-cur.conf"
   echo "title ${1}" >>"${GUMMIBOOT_ENTRIES}/gentoo-cur.conf"
-  echo "efi /${2}" >>"${GUMMIBOOT_ENTRIES}/gentoo-cur.conf"
+  echo "efi /kernel-${2}" >>"${GUMMIBOOT_ENTRIES}/gentoo-cur.conf"
 }
 
 ###############################################################################
 # Remove a kernel configuration.
 # Parameters:
-#  1 - Kernel version.
+#  1 - Kernel version. The kernel file is /boot/kernel-${2}.
 ###############################################################################
 function bootloader_remove
 {

@@ -44,6 +44,6 @@ rm -f ${KEMA_SAVED_CONFIG}
 
 # Update boot
 bootloader_remove ${CUR_KERNEL}
-bootloader_install "Gentoo ${CUR_KERNEL}" "kernel-${CUR_KERNEL}" "${CUR_KERNEL}"
+bootloader_install "Gentoo ${CUR_KERNEL}" "${CUR_KERNEL}"
 mv /boot/kernel-${TEST_KERNEL} /boot/kernel-${CUR_KERNEL}
 
