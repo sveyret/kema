@@ -59,7 +59,7 @@ function _gummiboot_getcurrent
 function bootloader_backup
 {
   extracted=$(_gummiboot_getcurrent)
-  if [[ -n ${CUR_KERNEL} ]]; then
+  if [[ -n ${extracted} ]]; then
     mv "${GUMMIBOOT_ENTRIES}/gentoo-cur.conf" "${GUMMIBOOT_ENTRIES}/gentoo-${extracted}.conf"
   fi
 }
