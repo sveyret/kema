@@ -85,6 +85,6 @@ function bootloader_install
 ###############################################################################
 function bootloader_remove
 {
-  rm "${GUMMIBOOT_ENTRIES}/gentoo-${1}.conf"
+  rm -f "${GUMMIBOOT_ENTRIES}/gentoo-${1}.conf"
 }
 

@@ -41,6 +41,7 @@ pause
 
 # Remove tested kernel and set current back
 bootloader_remove ${CUR_KERNEL}
+bootloader_remove ${TEST_KERNEL}
 bootloader_install "Gentoo ${CUR_KERNEL}" "${CUR_KERNEL}"
 rm -f /boot/kernel-${TEST_KERNEL}
 

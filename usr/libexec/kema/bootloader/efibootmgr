@@ -49,7 +49,7 @@ function bootloader_install
 ###############################################################################
 function bootloader_remove
 {
-  extracted=$(efibootmgr -v | grep "kernel-${1}" | perl -pe 's/^Boot([\dA-F]*).*/$1/')
+  extracted=$(efibootmgr -v | grep "\\\\kernel-${1}[^.\d-]" | perl -pe 's/^Boot([\dA-F]*).*/$1/')
   efibootmgr -b ${extracted} -B
 }
 
