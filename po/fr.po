@@ -71,7 +71,7 @@ msgstr ""
 #: usr/libexec/kema/kema-help:22
 #, sh-format
 msgid "Give help on kema"
-msgstr "Donner de l'aide sur kema"
+msgstr "Avoir de l'aide sur kema"
 
 #: usr/libexec/kema/kema-help:24
 #, sh-format
@@ -91,6 +91,21 @@ msgstr ""
 "Vous pouvez ne taper que les premières lettres du service si cela ne cause "
 "pas d'ambigüité"
 
+#: usr/libexec/kema/kema-status:22
+#, sh-format
+msgid "Indicate if a test is pending"
+msgstr "Savoir si un test est en cours"
+
+#: usr/libexec/kema/kema-status:25
+#, sh-format
+msgid "A test is pending"
+msgstr "Un test est en cours"
+
+#: usr/libexec/kema/kema-status:27
+#, sh-format
+msgid "No test is pending"
+msgstr "Aucun test en cours"
+
 #: usr/libexec/kema/kema-test:22
 #, sh-format
 msgid "Test new kernel configuration"
@@ -104,7 +119,7 @@ msgstr ""
 "Création d'un nouveau noyau de test : ${TEST_KERNEL}\\n  (basé sur le "
 "noyau : ${CUR_KERNEL})"
 
-#: usr/libexec/kema/kema-test:38
+#: usr/libexec/kema/kema-test:35
 #, sh-format
 msgid "Test pending - no cleaning done"
 msgstr "Test en cours - pas de nettoyage"
