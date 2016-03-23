@@ -22,13 +22,25 @@
 # Version: 0.3
 ###############################################################################
 
+# Load configuration
+: ${KEMA_CONFIG_DIR:=/etc/kema}
+: ${KEMA_CONFIG_FILE:="${KEMA_CONFIG_DIR}/kema.conf"}
+[[ -r "${KEMA_CONFIG_FILE}" ]] && . "${KEMA_CONFIG_FILE}"
+. gettext.sh
+
 # Kema variables
-: ${KEMA_CONFIG_FILE:=/etc/kema/kema.conf}
+: ${KEMA_INITRAMFS_OPTS:=}
+: ${KEMA_KERNEL_OPTS:=}
+: ${KEMA_MAKE_OPTS:="-j4"}
+: ${KEMA_PATCH_DIR:="${KEMA_CONFIG_DIR}/patch"}
+: ${KEMA_BOOTLOADER:=}
+: ${KEMA_INITRAMFS:="-"}
+: ${KEMA_GENKERNEL_OPTS:=}
 : ${KEMA_CORE_DIR:=/usr/libexec/kema}
-: ${KEMA_BOOTLOADER_DIR:=${KEMA_CORE_DIR}/bootloader}
+: ${KEMA_BOOTLOADER_DIR:="${KEMA_CORE_DIR}/bootloader"}
 : ${KEMA_VAR_DIR:=/var/lib/kema}
-: ${KEMA_SAVED_CONFIG:=${KEMA_VAR_DIR}/saved.config}
-: ${KEMA_ARCH:=${HOSTTYPE}}
+: ${KEMA_SAVED_CONFIG:="${KEMA_VAR_DIR}/saved.config"}
+: ${KEMA_ARCH:="${HOSTTYPE}"}
 
 export TEXTDOMAIN=kema
 
@@ -36,10 +48,6 @@ KRED="\e[0;91m"
 KGREEN="\e[0;92m"
 KYELLOW="\e[0;93m"
 KNORMAL="\e[0m"
-
-# Load configuration
-[[ -r "${KEMA_CONFIG_FILE}" ]] && . "${KEMA_CONFIG_FILE}"
-. gettext.sh
 
 # Functions to display messages
 function einfo
@@ -83,13 +91,13 @@ function isTestPending
 [[ ${UID} == 0 ]] || eerror $(eval_gettext "You must be super-user to run kema")
 
 # Load bootloader functions
-if [[ -z "${BOOTLOADER}" ]]; then
+if [[ -z "${KEMA_BOOTLOADER}" ]]; then
   ewarn $(eval_gettext "No bootloader defined, using default one")
   . "${KEMA_BOOTLOADER_DIR}/default"
-elif [[ -r "${KEMA_BOOTLOADER_DIR}/${BOOTLOADER}" ]]; then
-  . "${KEMA_BOOTLOADER_DIR}/${BOOTLOADER}"
+elif [[ -r "${KEMA_BOOTLOADER_DIR}/${KEMA_BOOTLOADER}" ]]; then
+  . "${KEMA_BOOTLOADER_DIR}/${KEMA_BOOTLOADER}"
 else
-  eerror $(eval_gettext "Could not find \${BOOTLOADER} bootloader file")
+  eerror $(eval_gettext "Could not find \${KEMA_BOOTLOADER} bootloader file")
 fi
 
 # Which command was typed

@@ -66,7 +66,7 @@ Cela remettra le noyau par défaut en place et supprimera les modifications test
 ## Version 1.0
 
 - [x] Ajouter un kema status pour voir si l'on est en cours de test.
-- [ ] Analyser les variables du fichier de configuration, les préfixer avec KEMA_, et donner des valeurs par défaut. Commenter le fichier de configuration.
+- [x] Analyser les variables du fichier de configuration, les préfixer avec KEMA_, et donner des valeurs par défaut. Commenter le fichier de configuration.
 - [ ] Ajouter la gestion des options de noyau et initrd.
 - [x] Ajouter le gestionnaire d'amorçage efi.
 

@@ -21,23 +21,23 @@
 # kema script.
 ###############################################################################
 
-GUMMIBOOT_LOADER_CONF=/boot/loader/loader.conf
-GUMMIBOOT_ENTRIES=/boot/loader/entries
+: ${KEMA_GUMMIBOOT_LOADER_CONF}=/boot/loader/loader.conf
+: ${KEMA_GUMMIBOOT_ENTRIES}=/boot/loader/entries
 
 ###############################################################################
 # Check if expected configuration is installed. Do it if not.
 ###############################################################################
 function _gummiboot_checkinstall
 {
-  if ! grep "^default gentoo-cur$" "${GUMMIBOOT_LOADER_CONF}" >/dev/null 2>&1 ; then
+  if ! grep "^default gentoo-cur$" "${KEMA_GUMMIBOOT_LOADER_CONF}" >/dev/null 2>&1 ; then
 
     # Save existing configuration if any
-    if [[ -r "${GUMMIBOOT_LOADER_CONF}" ]] && [[ ! -r "${GUMMIBOOT_LOADER_CONF}"-kema ]]; then
-      mv "${GUMMIBOOT_LOADER_CONF}" "${GUMMIBOOT_LOADER_CONF}"-kema
+    if [[ -r "${KEMA_GUMMIBOOT_LOADER_CONF}" ]] && [[ ! -r "${KEMA_GUMMIBOOT_LOADER_CONF}"-kema ]]; then
+      mv "${KEMA_GUMMIBOOT_LOADER_CONF}" "${KEMA_GUMMIBOOT_LOADER_CONF}"-kema
     fi
 
     # Create loader configuration file
-	echo "default gentoo-cur" >"${GUMMIBOOT_LOADER_CONF}"
+	echo "default gentoo-cur" >"${KEMA_GUMMIBOOT_LOADER_CONF}"
 
   fi
 }
@@ -49,8 +49,8 @@ function _gummiboot_checkinstall
 ###############################################################################
 function _gummiboot_getcurrent
 {
-  if [[ -r "${GUMMIBOOT_ENTRIES}/gentoo-cur.conf" ]]; then
-    head -n 1 "${GUMMIBOOT_ENTRIES}/gentoo-cur.conf" | perl -pe 's/\:\s(\S+)\s*$/$1/'
+  if [[ -r "${KEMA_GUMMIBOOT_ENTRIES}/gentoo-cur.conf" ]]; then
+    head -n 1 "${KEMA_GUMMIBOOT_ENTRIES}/gentoo-cur.conf" | perl -pe 's/\:\s(\S+)\s*$/$1/'
   fi
 }
 
@@ -61,7 +61,7 @@ function bootloader_backup
 {
   extracted=$(_gummiboot_getcurrent)
   if [[ -n ${extracted} ]]; then
-    mv "${GUMMIBOOT_ENTRIES}/gentoo-cur.conf" "${GUMMIBOOT_ENTRIES}/gentoo-${extracted}.conf"
+    mv "${KEMA_GUMMIBOOT_ENTRIES}/gentoo-cur.conf" "${KEMA_GUMMIBOOT_ENTRIES}/gentoo-${extracted}.conf"
   fi
 }
 
@@ -73,9 +73,9 @@ function bootloader_backup
 ###############################################################################
 function bootloader_install
 {
-  echo "# Kernel version: ${2}" >"${GUMMIBOOT_ENTRIES}/gentoo-cur.conf"
-  echo "title ${1}" >>"${GUMMIBOOT_ENTRIES}/gentoo-cur.conf"
-  echo "efi /kernel-${2}" >>"${GUMMIBOOT_ENTRIES}/gentoo-cur.conf"
+  echo "# Kernel version: ${2}" >"${KEMA_GUMMIBOOT_ENTRIES}/gentoo-cur.conf"
+  echo "title ${1}" >>"${KEMA_GUMMIBOOT_ENTRIES}/gentoo-cur.conf"
+  echo "efi /kernel-${2}" >>"${KEMA_GUMMIBOOT_ENTRIES}/gentoo-cur.conf"
 }
 
 ###############################################################################
@@ -85,6 +85,6 @@ function bootloader_install
 ###############################################################################
 function bootloader_remove
 {
-  rm -f "${GUMMIBOOT_ENTRIES}/gentoo-${1}.conf"
+  rm -f "${KEMA_GUMMIBOOT_ENTRIES}/gentoo-${1}.conf"
 }
 

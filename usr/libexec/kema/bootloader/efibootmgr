@@ -21,7 +21,7 @@
 # kema script.
 ###############################################################################
 
-EFIBOOTMGR_PART=1
+: ${KEMA_EFIBOOTMGR_PART:=1}
 
 ###############################################################################
 # Set the current default kernel configuration as backup.
@@ -39,7 +39,7 @@ function bootloader_backup
 ###############################################################################
 function bootloader_install
 {
-  efibootmgr --create --part ${EFIBOOTMGR_PART} --label "${1}" --loader "\\kernel-${2}"
+  efibootmgr --create --part ${KEMA_EFIBOOTMGR_PART} --label "${1}" --loader "\\kernel-${2}"
 }
 
 ###############################################################################

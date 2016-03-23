@@ -40,7 +40,7 @@ else
   make mrproper
 fi
 make menuconfig
-make ${MAKE_OPTS} && make ${MAKE_OPTS} modules_install
+make ${KEMA_MAKE_OPTS} && make ${KEMA_MAKE_OPTS} modules_install
 cd ..
 
 # Update boot

@@ -77,27 +77,27 @@ eselect kernel set ${KERN_SELECT}
 mv ./.config linux/.config 2>/dev/null
 
 # Generate initramfs
-if [[ "${INITRAMFS}" == "-" ]]; then
+if [[ "${KEMA_INITRAMFS}" == "-" ]]; then
   rm -rf /tmp/genkernel 2>/dev/null
-  genkernel --no-install --tempdir=/tmp/genkernel ${GENKERNEL_OPTS} initramfs
-  INITRAMFS=/tmp/genkernel/initramfs*
+  genkernel --no-install --tempdir=/tmp/genkernel ${KEMA_GENKERNEL_OPTS} initramfs
+  KEMA_INITRAMFS=/tmp/genkernel/initramfs*
 fi
-if [[ -n "${INITRAMFS}" ]]; then
-  zcat "${INITRAMFS}" >linux/initramfs.cpio 2>/dev/null || \
-    xzcat "${INITRAMFS}" >linux/initramfs.cpio 2>/dev/null || \
-    cp "${INITRAMFS}" linux/initramfs.cpio
+if [[ -n "${KEMA_INITRAMFS}" ]]; then
+  zcat "${KEMA_INITRAMFS}" >linux/initramfs.cpio 2>/dev/null || \
+    xzcat "${KEMA_INITRAMFS}" >linux/initramfs.cpio 2>/dev/null || \
+    cp "${KEMA_INITRAMFS}" linux/initramfs.cpio
 fi
 
 # Generate new kernel
 cd linux
-for p in ${PATCH_DIR}/*.patch; do
+for p in "${KEMA_PATCH_DIR}/"*.patch; do
   patch -p1 <"${p}"
 done
 if [[ -r .config ]]; then
   make olddefconfig
 fi
 make menuconfig
-make ${MAKE_OPTS} && make ${MAKE_OPTS} modules_install
+make ${KEMA_MAKE_OPTS} && make ${KEMA_MAKE_OPTS} modules_install
 cd ..
 
 # Update boot

@@ -222,8 +222,8 @@ msgstr "Aucun gestionnaire d'amorçage défini, utilisation de celui par défaut
 
 #: usr/sbin/kema:92
 #, sh-format
-msgid "Could not find ${BOOTLOADER} bootloader file"
-msgstr "Impossible de trouver le fichier d'amorçage ${BOOTLOADER}"
+msgid "Could not find ${KEMA_BOOTLOADER} bootloader file"
+msgstr "Impossible de trouver le fichier d'amorçage ${KEMA_BOOTLOADER}"
 
 #: usr/sbin/kema:97
 #, sh-format
