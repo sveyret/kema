@@ -67,6 +67,8 @@ This will set the default kernel back and delete the tested modifications.
 
 ## Version 1.0
 
+- [ ] Add a kema status to know if we currently are in test.
+- [ ] Process all variables from configuration file, change them with KEMA_ prefix, and give them default values at beginig of kema. Comment configuration file.
 - [ ] Add kernel options and initrd management.
 - [x] Add efi bootloader.
 

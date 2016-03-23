@@ -22,7 +22,7 @@ MO= $(SRC:.po=.mo)
 all: $(MO)
 
 # Building po files:
-# xgettext -o lang.po -j -L shell --from-code UTF-8 usr/sbin/kema usr/libexec/kema/kema-*
+# xgettext -o lang.po -F -j -L shell --from-code UTF-8 usr/sbin/kema usr/libexec/kema/kema-*
 %.mo: %.po
 	msgfmt -o $@ $<
 
