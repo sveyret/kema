@@ -1,2 +1,10 @@
-*.mo
+# Global ignores
+*~
+.*
+
+# Exclude from global ignores
+!.gitignore
+
+# Ignore generated files
+/po/*.mo
 
