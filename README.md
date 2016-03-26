@@ -32,6 +32,9 @@ A Makefile is provided to compile messages. Installation can simply done by copy
     make
     cp -R usr etc ${DEST}
     cp po/${LINGUAS}.mo /usr/share/locale/${LINGUAS}/LC_MESSAGES/kema.mo
+    mkdir -p /var/lib/kema
+
+It is also recommanded to install _genkernel_ package if you need it to provide _initramfs_.
 
 # Usage
 
@@ -65,12 +68,18 @@ This will set the default kernel back and delete the tested modifications.
 
 # Tasks
 
-## Version 1.0
+## Version 0.9
 
 - [x] Add a kema status to know if we currently are in test.
 - [x] Process all variables from configuration file, change them with KEMA_ prefix, and give them default values at beginig of kema. Comment configuration file.
 - [ ] Add kernel options and initrd management.
 - [x] Add efi bootloader.
+
+## Version 1.0
+
+- [ ] Add message for each removed kernel.
+- [ ] Do not remove kernels present in eselect (not unmerged), but display warning.
+- [ ] Care for command return values and stop script if error.
 
 ## Future version
 

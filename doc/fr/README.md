@@ -30,6 +30,9 @@ Un Makefile est fourni pour compiler les messages. L'installation se fait simple
     make
     cp -R usr etc ${DEST}
     cp po/${LINGUAS}.mo /usr/share/locale/${LINGUAS}/LC_MESSAGES/kema.mo
+    mkdir -p /var/lib/kema
+
+Il est également conseillé d'installer le paquet _genkernel_ si vous en avez besoin pour créer _initramfs_.
 
 # Mode d'emploi
 
@@ -63,12 +66,18 @@ Cela remettra le noyau par défaut en place et supprimera les modifications test
 
 # Tâches
 
-## Version 1.0
+## Version 0.9
 
 - [x] Ajouter un kema status pour voir si l'on est en cours de test.
 - [x] Analyser les variables du fichier de configuration, les préfixer avec KEMA_, et donner des valeurs par défaut. Commenter le fichier de configuration.
 - [ ] Ajouter la gestion des options de noyau et initrd.
 - [x] Ajouter le gestionnaire d'amorçage efi.
+
+## Version 1.0
+
+- [ ] Ajouter un message pour chaque noyau supprimé.
+- [ ] Ne pas supprimer les noyau présents dans eselect (non désinstallés), mais afficher un avertissement.
+- [ ] Prendre en compte les code de retour des commandes et arrêter le programme en cas d'erreur.
 
 ## Future version
 
