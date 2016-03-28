@@ -26,4 +26,11 @@ if isTestPending; then
 else
   einfo $(eval_gettext "No test is pending")
 fi
+echo
+if [[ -r ${KEMA_VAR_DIR}/backup ]]; then
+  BACK_KERNEL=$(cat ${KEMA_VAR_DIR}/backup)
+  einfo $(eval_gettext "Backup kernel: \${BACK_KERNEL}")
+fi
+CUR_KERNEL=$(uname -r | perl -pe 's/-.*//')
+einfo $(eval_gettext "Current kernel: \${CUR_KERNEL}")
 

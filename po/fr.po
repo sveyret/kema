@@ -234,3 +234,9 @@ msgstr "Aucune commande donnée à kema"
 #, sh-format
 msgid "Unknown command: ${BAD_COMMAND}"
 msgstr "Commande ${BAD_COMMAND} inconnue"
+
+msgid "Backup kernel: ${BACK_KERNEL}"
+msgstr "Noyau de secours : ${BACK_KERNEL}"
+
+msgid "Current kernel: ${CUR_KERNEL}"
+msgstr "Noyau actuel : ${CUR_KERNEL}"
