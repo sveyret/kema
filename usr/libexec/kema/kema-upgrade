@@ -86,6 +86,7 @@ if [[ -n "${KEMA_INITRAMFS}" ]]; then
   zcat "${KEMA_INITRAMFS}" >linux/initramfs.cpio 2>/dev/null || \
     xzcat "${KEMA_INITRAMFS}" >linux/initramfs.cpio 2>/dev/null || \
     cp "${KEMA_INITRAMFS}" linux/initramfs.cpio
+  perl -i -pe 's/^\W*CONFIG_INITRAMFS_SOURCE.*$/CONFIG_INITRAMFS_SOURCE=\"initramfs.cpio\"/' linux/.config
 fi
 
 # Generate new kernel
