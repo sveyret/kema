@@ -109,7 +109,7 @@ bootloader_install "Gentoo ${NEW_KERNEL}" "${NEW_KERNEL}"
 for kernel in $(ls -d linux-* | grep -v ${CUR_KERNEL} | grep -v ${NEW_KERNEL}); do
   extracted=$(echo ${kernel} | perl -pe 's/linux-(.*)-.*/$1/')
   bootloader_remove "${extracted}"
-  rm /boot/kernel-${extracted}
+  rm -f /boot/kernel-${extracted}
   rm -rf linux-${extracted}-*
 done
 
