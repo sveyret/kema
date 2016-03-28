@@ -34,9 +34,7 @@ cd /usr/src/linux
 if isTestPending; then
   ewarn $(eval_gettext "Test pending - no cleaning done")
 else
-  if [[ -r .config ]]; then
-    cp .config ${KEMA_SAVED_CONFIG}
-  fi
+  cp .config ${KEMA_SAVED_CONFIG}
   make mrproper
 fi
 make menuconfig
