@@ -90,9 +90,11 @@ fi
 
 # Generate new kernel
 cd linux
-for p in "${KEMA_PATCH_DIR}/"*.patch; do
-  patch -p1 <"${p}"
-done
+if ls "${KEMA_PATCH_DIR}/"*.patch >/dev/null 2>&1; then
+  for p in "${KEMA_PATCH_DIR}/"*.patch; do
+    patch -p1 <"${p}"
+  done
+fi
 if [[ -r .config ]]; then
   make olddefconfig
 fi
