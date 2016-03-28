@@ -21,6 +21,7 @@
 # kema script.
 ###############################################################################
 
+: ${KEMA_EFIBOOTMGR_DISK:=/dev/sda}
 : ${KEMA_EFIBOOTMGR_PART:=1}
 
 ###############################################################################
@@ -39,7 +40,18 @@ function bootloader_backup
 ###############################################################################
 function bootloader_install
 {
-  efibootmgr --create --part ${KEMA_EFIBOOTMGR_PART} --label "${1}" --loader "\\kernel-${2}"
+  OPTION=""
+  if [[ -n ${KEMA_INITRAMFS_OPTS} ]]; then
+    OPTION=" initrd='${KEMA_INITRAMFS_OPTS}'${OPTION}"
+  fi
+  if [[ -n ${KEMA_KERNEL_OPTS} ]]; then
+    OPTION=" ${KEMA_KERNEL_OPTS}${OPTION}"
+  fi
+  if [[ -n ${OPTION} ]]; then
+    OPTION="-u\"${OPTION}\""
+  fi
+  efibootmgr --create --disk ${KEMA_EFIBOOTMGR_DISK} --part ${KEMA_EFIBOOTMGR_PART} \
+    --label "${1}" --loader "\\kernel-${2}" ${OPTION}
 }
 
 ###############################################################################

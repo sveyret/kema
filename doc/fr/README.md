@@ -80,13 +80,6 @@ Afin d'avoir des informations sur l'état courant (noyaux installés, test en co
 
 # Tâches
 
-## Version 0.9
-
-- [x] Ajouter un kema status pour voir si l'on est en cours de test.
-- [x] Analyser les variables du fichier de configuration, les préfixer avec KEMA_, et donner des valeurs par défaut. Commenter le fichier de configuration.
-- [ ] Ajouter la gestion des options de noyau et initrd.
-- [x] Ajouter le gestionnaire d'amorçage efi.
-
 ## Version 1.0
 
 - [ ] Ajouter un message pour chaque noyau supprimé.

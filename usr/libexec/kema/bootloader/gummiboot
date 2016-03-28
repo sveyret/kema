@@ -76,7 +76,13 @@ function bootloader_install
   _gummiboot_checkinstall
   echo "# Kernel version: ${2}" >"${KEMA_GUMMIBOOT_ENTRIES}/gentoo-cur.conf"
   echo "title ${1}" >>"${KEMA_GUMMIBOOT_ENTRIES}/gentoo-cur.conf"
-  echo "efi /kernel-${2}" >>"${KEMA_GUMMIBOOT_ENTRIES}/gentoo-cur.conf"
+  echo "linux /kernel-${2}" >>"${KEMA_GUMMIBOOT_ENTRIES}/gentoo-cur.conf"
+  if [[ -n ${KEMA_KERNEL_OPTS} ]]; then
+    echo "options ${KEMA_KERNEL_OPTS}" >>"${KEMA_GUMMIBOOT_ENTRIES}/gentoo-cur.conf"
+  fi
+  if [[ -n ${KEMA_INITRAMFS_OPTS} ]]; then
+    echo "initrd ${KEMA_INITRAMFS_OPTS}" >>"${KEMA_GUMMIBOOT_ENTRIES}/gentoo-cur.conf"
+  fi
 }
 
 ###############################################################################

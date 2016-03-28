@@ -82,13 +82,6 @@ If you want to have information about the current status (installed kernels, pen
 
 # Tasks
 
-## Version 0.9
-
-- [x] Add a kema status to know if we currently are in test.
-- [x] Process all variables from configuration file, change them with KEMA_ prefix, and give them default values at beginig of kema. Comment configuration file.
-- [ ] Add kernel options and initrd management.
-- [x] Add efi bootloader.
-
 ## Version 1.0
 
 - [ ] Add message for each removed kernel.
