@@ -21,7 +21,7 @@ kema est distribué dans l'espoir qu'il sera utile, mais SANS AUCUNE GARANTIE ; 
 
 Vous devez avoir reçu une copie de la GNU General Public License en même temps que kema ; si ce n'est pas le cas, consultez http://www.gnu.org/licenses.
 
-# Install
+# Installation
 
 Un Makefile est fourni pour compiler les messages. L'installation se fait simplement en copiant les fichiers aux emplacements appropriés.
 
@@ -32,11 +32,13 @@ Un Makefile est fourni pour compiler les messages. L'installation se fait simple
     cp po/${LINGUAS}.mo /usr/share/locale/${LINGUAS}/LC_MESSAGES/kema.mo
     mkdir -p /var/lib/kema
 
-Il est également conseillé d'installer le paquet _genkernel_ si vous en avez besoin pour créer _initramfs_.
+Il est également conseillé d'installer le paquet _genkernel_ si vous en avez besoin pour créer un _initramfs_.
 
 # Mode d'emploi
 
 Avant d'utiliser kema, vérifiez que le fichier de configuration /etc/kema/kema.conf correspond à vos besoins. Le fichier de configuration par défaut contient des commentaires explicatifs pour chaque option.
+
+## Mise à jour
 
 Lorsque vous mettez votre noyau à jour pour la première fois, vous pouvez avoir besoin de spécifier la version du noyau que vous voulez utiliser :
 
@@ -48,7 +50,13 @@ Cela sera également le cas s'il y a plusieurs noyaux possibles dans le réperto
 
 Le noyau actuel sera conservé comme noyau de secours et votre gestionnaire d'amorçage sera modifié pour le sélectionner en cas de besoin.
 
-La mise à jour du noyau ouvre le menu de configuration de noyau. Si vous ne souhaitez pas y faire de modification, vous pouvez simplement sortir. La configuration précédente sera automatiquement importée.
+La mise à jour du noyau ouvre le menu de configuration de noyau. Si vous ne souhaitez pas y faire de modification, vous pouvez simplement sortir. La configuration du noyau précédent sera automatiquement importée.
+
+Si vous laissez _genkernel_ créer le fichier d'_initramfs_, celui-ci devra être intégré au noyau. Vous devrez donc veiller à laisser l'option de configuration noyau _CONFIG_INITRAMFS_SOURCE_ à _initramfs.cpio_. Il en est de même si vous fournissez un fichier d'_initramfs_ a intégrer.
+
+Vous pouvez également spécifier une option _initramfs_ à faire ajouter au noyau par le gestionnaire d'amorçage. Dans ce cas, il est de votre responsabilité d'installer ce fichier au bon endroit.
+
+## Test
 
 Si vous souhaitez tester des modifications d'options sur le noyau courant, vous pouvez exécuter :
 
@@ -63,6 +71,12 @@ Cela remplacera le noyau par défaut avec le noyau testé. Si vos tests échouen
     kema cancel
 
 Cela remettra le noyau par défaut en place et supprimera les modifications testées.
+
+## Autres fonctionnalités
+
+Afin d'avoir des informations sur l'état courant (noyaux installés, test en cours) il est possible d'utiliser la commande :
+
+    kema status
 
 # Tâches
 

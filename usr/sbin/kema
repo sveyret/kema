@@ -34,7 +34,7 @@
 : ${KEMA_MAKE_OPTS:="-j4"}
 : ${KEMA_PATCH_DIR:="${KEMA_CONFIG_DIR}/patch"}
 : ${KEMA_BOOTLOADER:=}
-: ${KEMA_INITRAMFS:="-"}
+: ${KEMA_INITRAMFS_EMBED:="-"}
 : ${KEMA_GENKERNEL_OPTS:=}
 : ${KEMA_CORE_DIR:=/usr/libexec/kema}
 : ${KEMA_BOOTLOADER_DIR:="${KEMA_CORE_DIR}/bootloader"}

@@ -34,11 +34,13 @@ A Makefile is provided to compile messages. Installation can simply done by copy
     cp po/${LINGUAS}.mo /usr/share/locale/${LINGUAS}/LC_MESSAGES/kema.mo
     mkdir -p /var/lib/kema
 
-It is also recommanded to install _genkernel_ package if you need it to provide _initramfs_.
+It is also recommanded to install _genkernel_ package if you need it to provide an _initramfs_.
 
 # Usage
 
 Before using kema, ensure that configuration file /etc/kema/kema.conf matches your needs. The default configuration file contains self-explanatory comments.
+
+## Upgrade
 
 When upgrading a kernel for the first time with kema, you may need to specify the version of the kernel you want to use:
 
@@ -50,7 +52,13 @@ This will also be the case if there are multiple possible kernels in the /usr/sr
 
 The current kernel will be kept for backup and your bootloader will be modified to select it if needed.
 
-Upgrading kernel will open the kernel configuration menu. If you do not want to modify the current configuration, you can simply exit. The previous configuration is automatically imported.
+Upgrading kernel will open the kernel configuration menu. If you do not want to modify the current configuration, you can simply exit. The configuration of previous kernel is automatically imported.
+
+If you leave _genkernel_ create the _initramfs_ file for you, it will have to be embedded in the kernel. It will be required to check the the kernel configuration option _CONFIG_INITRAMFS_SOURCE_ is left at _initramfs.cpio_. This same option must have the same value if you give an _initramfs_ file to be embedded.
+
+It is also possible to specify an _initramfs_ option to be added to the kernel by the bootloader. In this case, you have to install this file at proper place by yourself.
+
+## Test
 
 If you want to test changes on current kernel options, you can execute:
 
@@ -65,6 +73,12 @@ This will replace the default kernel with the tested one. If your tests failed, 
     kema cancel
 
 This will set the default kernel back and delete the tested modifications.
+
+## Other functions
+
+If you want to have information about the current status (installed kernels, pending tests), you can use the following command:
+
+    kema status
 
 # Tasks
 

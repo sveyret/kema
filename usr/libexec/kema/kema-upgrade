@@ -77,15 +77,15 @@ eselect kernel set ${KERN_SELECT}
 mv ./.config linux/.config 2>/dev/null
 
 # Generate initramfs
-if [[ "${KEMA_INITRAMFS}" == "-" ]]; then
+if [[ "${KEMA_INITRAMFS_EMBED}" == "-" ]]; then
   rm -rf /tmp/genkernel 2>/dev/null
   genkernel --no-install --tempdir=/tmp/genkernel ${KEMA_GENKERNEL_OPTS} initramfs
-  KEMA_INITRAMFS=/tmp/genkernel/initramfs*
+  KEMA_INITRAMFS_EMBED=/tmp/genkernel/initramfs*
 fi
-if [[ -n "${KEMA_INITRAMFS}" ]]; then
-  zcat "${KEMA_INITRAMFS}" >linux/initramfs.cpio 2>/dev/null || \
-    xzcat "${KEMA_INITRAMFS}" >linux/initramfs.cpio 2>/dev/null || \
-    cp "${KEMA_INITRAMFS}" linux/initramfs.cpio
+if [[ -n "${KEMA_INITRAMFS_EMBED}" ]]; then
+  zcat "${KEMA_INITRAMFS_EMBED}" >linux/initramfs.cpio 2>/dev/null || \
+    xzcat "${KEMA_INITRAMFS_EMBED}" >linux/initramfs.cpio 2>/dev/null || \
+    cp "${KEMA_INITRAMFS_EMBED}" linux/initramfs.cpio
   perl -i -pe 's/^\W*CONFIG_INITRAMFS_SOURCE.*$/CONFIG_INITRAMFS_SOURCE=\"initramfs.cpio\"/' linux/.config
 fi
 
