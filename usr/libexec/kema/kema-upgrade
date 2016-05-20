@@ -80,7 +80,7 @@ mv ./.config linux/.config 2>/dev/null
 if [[ "${KEMA_INITRAMFS_EMBED}" == "-" ]]; then
   rm -rf /tmp/genkernel 2>/dev/null
   genkernel --no-install --tempdir=/tmp/genkernel ${KEMA_GENKERNEL_OPTS} initramfs
-  KEMA_INITRAMFS_EMBED=/tmp/genkernel/initramfs*
+  KEMA_INITRAMFS_EMBED=$(echo /tmp/genkernel/initramfs*)
 fi
 if [[ -n "${KEMA_INITRAMFS_EMBED}" ]]; then
   zcat "${KEMA_INITRAMFS_EMBED}" >linux/initramfs.cpio 2>/dev/null || \
