@@ -28,6 +28,20 @@ all: $(MO)
 
 .PHONY: clean mrproper install
 
+install:
+	install -D -m755 usr/sbin/kema "${DESTDIR}/usr/sbin/kema"
+	install -d -m755 "${DESTDIR}/usr/libexec/kema/bootloader"
+	install -m644 usr/libexec/kema/kema-* "${DESTDIR}/usr/libexec/kema"
+	install -m644 usr/libexec/kema/bootloader/* "${DESTDIR}/usr/libexec/kema/bootloader"
+	install -d -m755 "${DESTDIR}/etc/kema"
+	install -m644 etc/kema/* "${DESTDIR}/etc/kema"
+	install -d -m755 "${DESTDIR}/var/lib/kema"
+	for lang in po/*.mo; do \
+		if [[ -f $${lang} ]]; then \
+			install -D -m644 $${lang} "${DESTDIR}/usr/share/locale/$$(basename $${lang} .mo)/LC_MESSAGES/kema.mo"; \
+		fi \
+	done
+
 clean:
 	rm -f po/*.mo
 

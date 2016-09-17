@@ -23,14 +23,11 @@ Vous devez avoir reçu une copie de la GNU General Public License en même temps
 
 # Installation
 
-Un Makefile est fourni pour compiler les messages. L'installation se fait simplement en copiant les fichiers aux emplacements appropriés.
+La compilation et l'installation sont effectuées simplement par :
 
-    DEST=/
-    LINGUAS=fr
-    make
-    cp -R usr etc ${DEST}
-    cp po/${LINGUAS}.mo /usr/share/locale/${LINGUAS}/LC_MESSAGES/kema.mo
-    mkdir -p /var/lib/kema
+    make && make install
+
+Notez que `make install` supporte également la variable `DESTDIR` pour installer ailleurs qu'au niveau de la racine du système.
 
 Il est également conseillé d'installer le paquet _genkernel_ si vous en avez besoin pour créer un _initramfs_.
 
