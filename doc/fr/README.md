@@ -7,7 +7,7 @@ kema est un ensemble de scripts utilisé pour faciliter la gestion de noyau Linu
 
 # Langue
 
-Le français étant ma langue maternel, fournir les documents et messages en français n'est pas une option. Les autres traductions sont bienvenues.
+Le français étant ma langue maternelle, fournir les documents et messages en français n'est pas une option. Les autres traductions sont bienvenues.
 
 Cependant, l'anglais étant la langue de la programmation, le code, y compris les noms de variable et commentaires, sont en anglais.
 
