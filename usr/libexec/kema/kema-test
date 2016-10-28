@@ -30,8 +30,10 @@ einfo $(eval_gettext "Creating new test kernel: \${TEST_KERNEL}\\n  (based on ke
 pause
 
 # Generate new kernel
+isTestPending
+TEST_PENDING=$?
 cd /usr/src/linux
-if isTestPending; then
+if [[ ${TEST_PENDING} -eq 0 ]]; then
   ewarn $(eval_gettext "Test pending - no cleaning done")
 else
   cp .config ${KEMA_SAVED_CONFIG}
@@ -43,7 +45,7 @@ cd ..
 
 # Update boot
 cp linux/arch/x86_64/boot/bzImage /boot/kernel-${TEST_KERNEL}
-if ! isTestPending; then
+if [[ ${TEST_PENDING} -ne 0 ]]; then
   bootloader_backup
   bootloader_install "Gentoo test ${CUR_KERNEL}" "${TEST_KERNEL}"
 fi
