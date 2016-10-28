@@ -36,8 +36,9 @@ cd /usr/src/linux
 if [[ ${TEST_PENDING} -eq 0 ]]; then
   ewarn $(eval_gettext "Test pending - no cleaning done")
 else
-  cp .config ${KEMA_SAVED_CONFIG}
+  mv .config ${KEMA_SAVED_CONFIG}
   make mrproper
+  cp ${KEMA_SAVED_CONFIG} .config
 fi
 make menuconfig
 make ${KEMA_MAKE_OPTS} && make ${KEMA_MAKE_OPTS} modules_install
