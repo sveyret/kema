@@ -1,5 +1,5 @@
 ###############################################################################
-# Copyright © 2016 Stéphane Veyret stephane_DOT_veyret_AT_neptura_DOT_org
+# Copyright © 2018 Stéphane Veyret stephane_DOT_veyret_AT_neptura_DOT_org
 #
 # This file is part of kema.
 #
@@ -23,6 +23,15 @@
 
 : ${KEMA_EFIBOOTMGR_DISK:=/dev/sda}
 : ${KEMA_EFIBOOTMGR_PART:=1}
+
+###############################################################################
+# Test if efivars is read-only.
+###############################################################################
+function _efibootmgr_set_efivars_readonly
+{
+  mount | grep '/sys/firmware/efi/efivars.*(\([^,)]*,\)*ro\(,[^,)]*\)*)' 2>/dev/null 1>&2
+  _efibootmgr_efivars_readonly=$?
+}
 
 ###############################################################################
 # Set the current default kernel configuration as backup.
@@ -50,8 +59,15 @@ function bootloader_install
   if [[ -n ${OPTION} ]]; then
     OPTION="-u\"${OPTION}\""
   fi
+  _efibootmgr_set_efivars_readonly
+  if (( _efibootmgr_efivars_readonly == 0 )); then
+    mount -o remount -t efivarfs efivarfs /sys/firmware/efi/efivars
+  fi
   efibootmgr --create --disk ${KEMA_EFIBOOTMGR_DISK} --part ${KEMA_EFIBOOTMGR_PART} \
     --label "${1}" --loader "\\kernel-${2}" ${OPTION}
+  if (( _efibootmgr_efivars_readonly == 0 )); then
+    mount -o remount -r -t efivarfs efivarfs /sys/firmware/efi/efivars
+  fi
 }
 
 ###############################################################################
@@ -62,6 +78,13 @@ function bootloader_install
 function bootloader_remove
 {
   extracted=$(efibootmgr -v | grep "\\\\kernel-${1}[^.\d-]" | perl -pe 's/^Boot([\dA-F]*).*/$1/')
+  _efibootmgr_set_efivars_readonly
+  if (( _efibootmgr_efivars_readonly == 0 )); then
+    mount -o remount -t efivarfs efivarfs /sys/firmware/efi/efivars
+  fi
   efibootmgr -b ${extracted} -B
+  if (( _efibootmgr_efivars_readonly == 0 )); then
+    mount -o remount -r -t efivarfs efivarfs /sys/firmware/efi/efivars
+  fi
 }
 
