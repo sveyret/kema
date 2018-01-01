@@ -1,5 +1,5 @@
 ###############################################################################
-# Copyright © 2016 Stéphane Veyret stephane_DOT_veyret_AT_neptura_DOT_org
+# Copyright © 2018 Stéphane Veyret stephane_DOT_veyret_AT_neptura_DOT_org
 #
 # This file is part of kema.
 #
@@ -35,7 +35,7 @@ fi
 BACK_KERNEL=$(cat ${KEMA_VAR_DIR}/backup)
 
 # Calculate current kernel version
-CUR_KERNEL=$(uname -r | perl -pe 's/-.*//')
+CUR_KERNEL=$(uname -r | perl -pe 's/-[^-]*$//')
 
 # Go to kernel sources directory
 cd /usr/src
@@ -53,11 +53,13 @@ if [[ -z ${NEW_KERNEL} ]]; then
   if [[ $(echo "${NEW_KERNEL}" | wc -w) != "1" ]]; then
     eerror $(eval_gettext "kema could not guess new kernel version\\nPlease specify version as parameter")
   fi
-  NEW_KERNEL=$(echo ${NEW_KERNEL} | perl -pe 's/linux-(.*)-.*/$1/')
+  NEW_KERNEL=$(echo ${NEW_KERNEL} | perl -pe 's/linux-([^-]*)-.*?(-r\d+)?$/$1$2/')
 fi
 
 # Check new kernel existance
-ls linux-${NEW_KERNEL}-* 2>/dev/null 1>&2 || \
+NEW_KERNEL_VERSION=$(echo ${NEW_KERNEL} | perl -pe 's/-r\d+$//')
+NEW_KERNEL_RELEASE=$(echo ${NEW_KERNEL} | perl -pe 's/[^-]*(-)?/$1/')
+ls linux-${NEW_KERNEL_VERSION}-*${NEW_KERNEL_RELEASE} 2>/dev/null 1>&2 || \
   eerror $(eval_gettext "kema could not find kernel \${NEW_KERNEL}")
 
 # Compare backup and current kernel
@@ -72,7 +74,7 @@ pause
 
 # Change kernel and copy configuration file
 cp linux/.config ./.config 2>/dev/null
-KERN_SELECT=$(eselect kernel list | grep ${NEW_KERNEL} | perl -pe 's/\s*\[(\d+)\].*/$1/')
+KERN_SELECT=$(eselect kernel list | grep "linux-${NEW_KERNEL_VERSION}-.*${NEW_KERNEL_RELEASE}" | perl -pe 's/\s*\[(\d+)\].*/$1/')
 eselect kernel set ${KERN_SELECT}
 mv ./.config linux/.config 2>/dev/null
 
